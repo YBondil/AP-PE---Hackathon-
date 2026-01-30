@@ -5,7 +5,9 @@ Requirements :
 
 To do :
  -[ ] generer une map
- -[ ] faire se déplacer les enemis 
- -[ ] gérer le spawn des items et des emenemis 
- -[ ] rajouter la gestion des armures (possibilité de block, etc... )
+ -[ ] faire se déplacer les enemis -> eloi
+ -[ ] gérer le spawn des items et des emenemis -> leonard
+ -[ ] rajouter la gestion des armures (possibilité de block, etc... ) -> tomok
+
+ 
  -[ ] affiche la map au progressivement (optionel)

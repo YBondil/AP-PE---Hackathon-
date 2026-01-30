@@ -47,55 +47,42 @@ def combat(player, enemy):
         get_char()
 
 def main():
-    # Setup Player and Map
-    hero = Player("Tomoki", 5, 5)
-    weapon = itm.Sword(8,8)
-    hero.pick_item(weapon)
-    leonard = itm.Enemy(30, 2,2)
-    enemies = [leonard]
-
-    potion = itm.Magic_Potion(8,2)
-    water = itm.Water(5,4)
-    bow = itm.Bow(3,3)
-
-    items = [potion, water, bow]
-
-    m = Map(map_size=20, player=hero, enemies = enemies, items = items)
-    
-    # Create a room and place it
-    room = m.new_room(width=12, height=8)
-    m.create_room(room, (1, 1))
-    
-    print("Controls: ZSQD to move, X to quit. Press any key to start...")
-    get_char()
-
-    while hero.is_alive():
-        clear_screen()
-        m.render()
         
-        # Capture input
-        key = get_char()
-        if key == 'x':
-            break
-    
-        hero.move(key, m.grid)
-        
-        
-        for e in enemies:
-            if hero.x == e.x and hero.y == e.y and not e.is_dead:
-                combat(hero, e)
-        for i in items:
-            if hero.x == i.x and hero.y == i.y and not i.got_picked:
-                clear_screen()
-                hero.pick_item(i)
-                
-                print("Press any key to continue...")
-                get_char() 
+    hero = Player("pablo",0, 0)
+    m = Map(30, hero)
+    m.randomize(6) # Tente de créer 6 salles
+    m.render()
 
-    if hero.life_point <= 0:
-        print("\nGAME OVER - You died.")
-    else:
-        print("\nGame exited.")
-
+    #print("Controls: ZSQD to move, X to quit. Press any key to start...")
+    #get_char()
+#
+    #while hero.is_alive():
+    #    clear_screen()x
+    #    m.render()
+    #    
+    #    # Capture input
+    #    key = get_char()
+    #    if key == 'x':
+    #        break
+    #
+    #    hero.move(key, m.grid)
+    #    
+    #    
+    #    for e in enemies:
+    #        if hero.x == e.x and hero.y == e.y and not e.is_dead:
+    #            combat(hero, e)
+    #    for i in items:
+    #        if hero.x == i.x and hero.y == i.y and not i.got_picked:
+    #            clear_screen()
+    #            hero.pick_item(i)
+    #            
+    #            print("Press any key to continue...")
+    #            get_char() 
+#
+    #if hero.life_point <= 0:
+    #    print("\nGAME OVER - You died.")
+    #else:
+    #    print("\nGame exited.")
+#
 if __name__ == "__main__":
     main()
