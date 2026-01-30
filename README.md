@@ -4,14 +4,8 @@ Requirements :
  - Arcade
 
 To do :
-
- - [ ] Une map -> tomiki
- - [ ] Un affichage (refresh) -> tomoki
- - [ ] un joueur -> yoan 
- - [ ] des enememis -> eloi 
- - [ ] des objets -> eloi
- - [ ] gérer les déplacements -> leonard 
-
-
- Joueur : 
-    ajouter les armures, casques, etc...
+ -[ ] generer une map
+ -[ ] faire se déplacer les enemis 
+ -[ ] gérer le spawn des items et des emenemis 
+ -[ ] rajouter la gestion des armures (possibilité de block, etc... )
+ -[ ] affiche la map au progressivement (optionel)
