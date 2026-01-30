@@ -1,10 +1,12 @@
 
+
 class Player:
     def __init__(self,name,x_init, y_init):
         #caracteristcs 
         self.name = name
         self.x = x_init
         self.y = y_init
+        self.has_moved = False
         self.life_point = 50
         self.thurst = 0
         self.hunger = 0 
@@ -64,7 +66,7 @@ class Player:
         print(f"{self.name} eats, current hunger : {self.hunger}")
 
     def pick_item(self, item):
-        #item.got_picked()
+        item.is_picked()
         if item.type == "water":
             self.pick_water(item)
         elif item.type == "food":
@@ -91,8 +93,22 @@ class Player:
         self.life_point -= damage_dealt
         if self.life_point <= 0 :
             print(f"{self.name} died...")
+    def is_alive(self):
+        return self.life_point>0
 
+    def move(self, key, game_map):
+        self.has_moved = True
+        self.last_x, self.last_y = self.x, self.y
+        new_x, new_y = self.x, self.y
 
-if __name__ == "__main__":
-    test = Player("titi", 2, 1)
-    print(test)
+        if key in ['z', 'w']: new_y -= 1
+        elif key == 's':      new_y += 1
+        elif key in ['q', 'a']: new_x -= 1
+        elif key == 'd':      new_x += 1
+
+        obstacles = [" ", "-", "|"]
+
+        if 0 <= new_y < len(game_map) and 0 <= new_x < len(game_map[0]):
+            if game_map[new_y][new_x] not in obstacles:
+                self.x, self.y = new_x, new_y
+
