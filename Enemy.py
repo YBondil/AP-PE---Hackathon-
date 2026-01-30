@@ -17,7 +17,6 @@ class Enemy:
     def __repr__(self):
         return "E"
     
-
     def got_hit(self, damage):
         dodge = random.randint(1,10)
         if dodge <= 2 and self.life_point >= 0: #20% de chance d'esquive

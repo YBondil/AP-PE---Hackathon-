@@ -18,9 +18,9 @@ def is_there_enemy(self):
     return None
 
 def initialize(self):
-    grid[self.player.y][self.player.x] = "@"
+    self.grid[self.player.y][self.player.x] = "@"
     for enemy in self.ennemies:
-        grid[enemy.y][enemy.x] = "E"
+        self.grid[enemy.y][enemy.x] = "E"
 
 def update(self):
     self.player.move()
