@@ -4,6 +4,10 @@ class Item:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        self.got_picked = False
+        
+    def is_picked(self):
+        self.got_picked = True
 
 class Enemy:
 
@@ -27,9 +31,6 @@ class Enemy:
             if self.life_point <= 0:
                 self.is_dead = 1
                 print("Enemy defeated")
-
-    def got_picked(self):
-        self.got_picked = 1
 
 
 
@@ -82,7 +83,7 @@ class Gold (Item):
 
 class Magic_Potion (Item):
 
-    def __init__(self, x, y, effect): #0 pour invisible, 1 pour force
+    def __init__(self, x, y, effect=None): #0 pour invisible, 1 pour force
         super().__init__(x, y)
         self.type = "magic potion"
         if effect == 0:
@@ -152,6 +153,7 @@ class Water (Item):
         super().__init__(x, y)
         self.type = "water"
         self.water_recovery = 10
+        self.thirst = 8
 
     def __repr__(self):
         return "w"

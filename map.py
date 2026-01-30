@@ -3,10 +3,12 @@ from random import randint
 class Map:
     walls = [" ", "-", "|"]
 
-    def __init__(self, map_size,player, nb_enemies, objects):
+    def __init__(self, map_size,player, enemies = [], items = []):
         self.grid = [[" " for _ in range(map_size)] for _ in range(map_size)]
         self.rooms = []
         self.player = player
+        self.enemies = enemies
+        self.items = items
 
     def new_room(self, width, height):
         room = [["." for _ in range(width)] for _ in range(height)]
@@ -33,8 +35,24 @@ class Map:
         if 0 <= y < len(self.grid) and 0 <= x < len(self.grid[0]):
             return self.grid[y][x] not in self.walls
         return False
+    
+    def render(self):
+        if 0 <= self.player.y < len(self.grid) and 0 <= self.player.x < len(self.grid[0]):
+            if self.player.has_moved : 
+                self.grid[self.player.last_y][self.player.last_x] = "."
+            self.grid[self.player.y][self.player.x] = str(self.player)
 
-    def affichage(self):
-        
+        if self.enemies:
+            for enemy in self.enemies:
+                if not enemy.is_dead and 0 <= enemy.y < len(self.grid) and 0 <= enemy.x < len(self.grid[0]):
+                    self.grid[enemy.y][enemy.x] = str(enemy)
+
+        if self.items:
+            for item in self.items:
+                if 0 <= item.y < len(self.grid) and 0 <= item.x < len(self.grid[0]) and not item.got_picked:
+                    self.grid[item.y][item.x] = str(item)
+
         for row in self.grid:
             print("".join(row))
+
+        print(f"\nHP: {self.player.life_point} | Gold: {self.player.gold} | Hunger: {self.player.hunger}")

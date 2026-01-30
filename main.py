@@ -1,30 +1,101 @@
+import os
+import sys
 from player import Player
-from Enemy import *
-from Map import *
-from deplacement import *
+import Enemy as itm
+from map import Map
+
+
+try:
+    import termios
+    import tty
+except ImportError:
+    import msvcrt
+
+def get_char():
+    if os.name == 'nt': 
+        return msvcrt.getch().decode('utf-8').lower()
+    else: 
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch.lower()
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
 
 def combat(player, enemy):
-    print(f"Fight : {player.name} vs enemy")
+    clear_screen()
+    print(f"!!! Fight : {player.name} vs Enemy !!!")
     while player.life_point > 0 and not enemy.is_dead:
-        print(f"{player.name} attacks with {player.weapon.weapon_type} !")
-        enemy.got_hit(player.damage())
-        print(f"Enemy hp : {enemy.life_point}, Player hp : {player.life_point}")
-        if enemy.is_dead:
-            print("Battle won !")
-        else:
-            print(f"Enemy attacks {player.name} !")
+        # Player attacks
+        dmg = player.damage()
+        enemy.got_hit(dmg)
+        
+        if not enemy.is_dead:
+            # Enemy attacks back
             player.got_hit(enemy.damage)
-            print(f"Enemy hp : {enemy.life_point}, Player hp : {player.life_point}")
+            print(f"Enemy hits you for {enemy.damage}!")
+        
+        print(f"Your HP: {player.life_point} | Enemy HP: {enemy.life_point}")
+        print("\nPress any key for next turn...")
+        get_char()
 
-#tests
-tomoki = Player("zizi", 0, 0)
+def main():
+    # Setup Player and Map
+    hero = Player("Tomoki", 5, 5)
+    weapon = itm.Sword(8,8)
+    hero.pick_item(weapon)
+    leonard = itm.Enemy(30, 2,2)
+    enemies = [leonard]
 
-arm = Sword(0,0)
-tomoki.pick_item(arm)
+    potion = itm.Magic_Potion(8,2)
+    water = itm.Water(5,4)
+    bow = itm.Bow(3,3)
 
-leonard = Enemy(25,0,0)
+    items = [potion, water, bow]
 
+    m = Map(map_size=20, player=hero, enemies = enemies, items = items)
+    
+    # Create a room and place it
+    room = m.new_room(width=12, height=8)
+    m.create_room(room, (1, 1))
+    
+    print("Controls: ZSQD to move, X to quit. Press any key to start...")
+    get_char()
 
-while True :
-    move = Deplacement()
+    while hero.is_alive():
+        clear_screen()
+        m.render()
+        
+        # Capture input
+        key = get_char()
+        if key == 'x':
+            break
+    
+        hero.move(key, m.grid)
+        
+        
+        for e in enemies:
+            if hero.x == e.x and hero.y == e.y and not e.is_dead:
+                combat(hero, e)
+        for i in items:
+            if hero.x == i.x and hero.y == i.y and not i.got_picked:
+                clear_screen()
+                hero.pick_item(i)
+                
+                print("Press any key to continue...")
+                get_char() 
 
+    if hero.life_point <= 0:
+        print("\nGAME OVER - You died.")
+    else:
+        print("\nGame exited.")
+
+if __name__ == "__main__":
+    main()
