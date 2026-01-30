@@ -1,8 +1,4 @@
-import math
-
-def distance(x,y):
-    return math.sqrt(x**2 + y**2)
-
+import random
 
 class Enemy:
 
@@ -10,7 +6,7 @@ class Enemy:
         self.life_point = hp
         self.x = x
         self.y = y
-        self.strengh = 1
+        self.damage = 10
         self.is_dead = 0
          
     def __repr__(self):
@@ -18,12 +14,14 @@ class Enemy:
     
 
     def got_hit(self, damage):
-        self.life_point -= damage
-        if self.life_point <= 0:
-            self.is_dead = 1
-            print("Enemy defeated")
-
-
+        dodge = random.randint(1,10)
+        if dodge <= 2 and self.life_point >= 0: #20% de chance d'esquive
+            print("the enemy has dodged tour attack")
+        else:
+            self.life_point -= damage
+            if self.life_point <= 0:
+                self.is_dead = 1
+                print("Enemy defeated")
 
 
 class Item:
@@ -44,6 +42,8 @@ class Weapon (Item):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.life_point = 5
+        self.weapon_type
+        self.type = "weapon"
 
     def attack(self):
         self.life_point -= 1
@@ -54,8 +54,7 @@ class Sword (Weapon):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.strengh = 2
-        self.scope = 1
-        self.type = "sword"
+        self.weapon_type = "sword"
 
     def __repr__(self):
         return "!"
@@ -66,12 +65,11 @@ class Bow (Weapon):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.strengh = 1
-        self.scope = 3
-        self.type = "bow"
+        self.weapon_type = "bow"
 
     def __repr__(self):
         return ")"
-    
+     
 
 class Gold (Item):
 
@@ -141,7 +139,8 @@ class Food (Item):
         self.is_eaten = 0
         self.food_recovery = 20
 
-
+    def __repr__(self):
+        return "f"
 
     def is_eaten(self):
         self.is_eaten = 1
@@ -154,7 +153,10 @@ class Water (Item):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.type = "water"
-        self.water_recovery = 
+        self.water_recovery = 10
+
+    def __repr__(self):
+        return "w"
         
 
 
