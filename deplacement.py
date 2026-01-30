@@ -1,5 +1,5 @@
 import arcade
-import Player.py   
+from player import Player
 
 class Deplacement(Player):
 
@@ -16,11 +16,11 @@ class Deplacement(Player):
 
         objets_infranchissables = [' ', '|', '-']
 
-        if key == arcade.key.RIGHT and room[self.player.x + 1][self.player.y] not in objets_infranchissables:
+        if key == arcade.key.RIGHT and room[self.x + 1][self.y] not in objets_infranchissables:
             self.turn_right()
-        elif key == arcade.key.LEFT and room[self.player.x - 1][self.player.y] not in objets_infranchissables:
+        elif key == arcade.key.LEFT and room[self.x - 1][self.y] not in objets_infranchissables:
             self.turn_left()
-        elif key == arcade.key.UP and room[self.player.x][self.player.y + 1] not in objets_infranchissables:
+        elif key == arcade.key.UP and room[self.x][self.y + 1] not in objets_infranchissables:
             self.turn_up()
-        elif key == arcade.key.DOWN and room[self.player.x][self.player.y - 1] not in objets_infranchissables:
+        elif key == arcade.key.DOWN and room[self.x][self.y - 1] not in objets_infranchissables:
             self.turn_down()
