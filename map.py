@@ -1,4 +1,4 @@
-from random import randint
+from random import choice
 
 class Map:
     walls = [" ", "-", "|"]
@@ -56,3 +56,47 @@ class Map:
             print("".join(row))
 
         print(f"\nHP: {self.player.life_point} | Gold: {self.player.gold} | Hunger: {self.player.hunger}")
+
+    def get_free_tiles(self):
+        free_tiles = []
+
+        for y in range(len(self.grid)):
+            for x in range(len(self.grid[0])):
+                if self.grid[y][x] == ".":
+                    # éviter le joueur
+                    if x == self.player.x and y == self.player.y:
+                        continue
+
+                    # éviter les ennemis
+                    if any(e.x == x and e.y == y and not e.is_dead for e in self.enemies):
+                        continue
+
+                    # éviter les items déjà placés
+                    if any(i.x == x and i.y == y and not i.got_picked for i in self.items):
+                        continue
+
+                    free_tiles.append((x, y))
+
+        return free_tiles
+
+    def place_item_randomly(self, item):
+        free_tiles = self.get_free_tiles()
+        if not free_tiles:
+            return False  # pas de place disponible
+
+        x, y = choice(free_tiles)
+        item.x = x
+        item.y = y
+        self.items.append(item)
+        return True
+    
+    def place_enemy_randomly(self, enemy):
+        free_tiles = self.get_free_tiles()
+        if not free_tiles:
+            return False  # pas de place disponible
+
+        x, y = choice(free_tiles)
+        enemy.x = x
+        enemy.y = y
+        self.enemies.append(enemy)
+        return True

@@ -4,7 +4,6 @@ from player import Player
 import Enemy as itm
 from map import Map
 
-
 try:
     import termios
     import tty
@@ -49,19 +48,24 @@ def combat(player, enemy):
 def main():
     # Setup Player and Map
     hero = Player("Tomoki", 5, 5)
-    weapon = itm.Sword(8,8)
+    weapon = itm.Sword(0,0)
     hero.pick_item(weapon)
-    leonard = itm.Enemy(30, 2,2)
-    enemies = [leonard]
 
-    potion = itm.Magic_Potion(8,2)
-    water = itm.Water(5,4)
-    bow = itm.Bow(3,3)
-
-    items = [potion, water, bow]
-
-    m = Map(map_size=20, player=hero, enemies = enemies, items = items)
+    leonard = itm.Enemy(10, 8,8)
     
+    water = itm.Water(1,3)
+    potion = itm.Magic_Potion(2, 3)
+    bow = itm.Bow(3, 3)
+
+    items = []
+    enemies = []
+    
+    m = Map(map_size=20, player=hero, enemies = enemies, items = items)
+
+    m.place_item_randomly(potion)
+    m.place_item_randomly(bow)
+    m.place_item_randomly(water)
+
     # Create a room and place it
     room = m.new_room(width=12, height=8)
     m.create_room(room, (1, 1))
