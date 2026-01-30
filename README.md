@@ -4,9 +4,9 @@
 
 To do :
 
- - [ ] Une map 
- - [ ] Un affichage (refresh)
- - [ ] un joueur
- - [ ] des enememis
- - [ ] des objets 
- - [ ] gérer les déplacements 
+ - [ ] Une map -> tomiki
+ - [ ] Un affichage (refresh) -> tomoki
+ - [ ] un joueur -> yoan 
+ - [ ] des enememis -> eloi 
+ - [ ] des objets -> eloi
+ - [ ] gérer les déplacements -> leonard 
