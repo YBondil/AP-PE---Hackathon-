@@ -79,6 +79,8 @@ def main():
             break
     
         hero.move(key, m.grid)
+        if len(enemies) > 0:
+            enemies[0].move(hero, m.grid)
         
         
         for e in enemies:

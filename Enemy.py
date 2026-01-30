@@ -1,4 +1,5 @@
 import random
+import math
 
 class Item:
     def __init__(self, x, y):
@@ -15,6 +16,8 @@ class Enemy:
         self.life_point = hp
         self.x = x
         self.y = y
+        self.last_x = x
+        self.last_y = y
         self.damage = 15
         self.is_dead = 0
          
@@ -31,6 +34,25 @@ class Enemy:
                 self.is_dead = 1
                 print("Enemy defeated")
 
+    def move(self, player, game_map):
+        self.last_x, self.last_y = self.x, self.y
+        dmin = 100
+        rayon_action = 10
+        obstacles = [" ", "-", "|"]
+        best_move = (self.x, self.y)
+        if not self.is_dead:
+            for dx in range(-1, 2):
+                for dy in range(-1, 2):
+                    if (abs(dx) + abs(dy)) != 2: #on exclut les diagonales
+                        new_x, new_y = self.x + dx, self.y + dy
+                        if 0 <= new_y < len(game_map) and 0 <= new_x < len(game_map[0]):
+                            if game_map[new_y][new_x] not in obstacles:
+                                d = math.sqrt((new_x - player.x)**2 +(new_y - player.y)**2)
+                                if d < dmin and d < rayon_action:
+                                    dmin = d
+                                    best_move = (new_x, new_y)
+
+            self.x, self.y = best_move
 
 
 class Weapon (Item):

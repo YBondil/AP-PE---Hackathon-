@@ -45,8 +45,15 @@ class Map:
         if self.enemies:
             for enemy in self.enemies:
                 if not enemy.is_dead and 0 <= enemy.y < len(self.grid) and 0 <= enemy.x < len(self.grid[0]):
+                    self.grid[enemy.last_y][enemy.last_x] = "."
                     self.grid[enemy.y][enemy.x] = str(enemy)
-
+                if enemy.is_dead:
+                    if self.grid[enemy.last_y][enemy.last_x] == str(enemy):
+                        self.grid[enemy.last_y][enemy.last_x] = "."
+                    if self.grid[enemy.y][enemy.x] == str(enemy):
+                        self.grid[enemy.y][enemy.x] = "."
+        
+    
         if self.items:
             for item in self.items:
                 if 0 <= item.y < len(self.grid) and 0 <= item.x < len(self.grid[0]) and not item.got_picked:
