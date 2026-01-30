@@ -16,7 +16,7 @@ class Enemy:
     def got_hit(self, damage):
         dodge = random.randint(1,10)
         if dodge <= 2 and self.life_point >= 0: #20% de chance d'esquive
-            print("the enemy has dodged tour attack")
+            print("the enemy has dodged your attack")
         else:
             self.life_point -= damage
             if self.life_point <= 0:
@@ -29,7 +29,7 @@ class Item:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.type
+        self.type = ""
         self.got_picked = 0
     
     def got_picked(self):
@@ -42,7 +42,7 @@ class Weapon (Item):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.life_point = 5
-        self.weapon_type
+        self.weapon_type = ""
         self.type = "weapon"
 
     def attack(self):
@@ -53,7 +53,7 @@ class Sword (Weapon):
     
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.strengh = 2
+        self.damage = 10
         self.weapon_type = "sword"
 
     def __repr__(self):
@@ -64,7 +64,7 @@ class Bow (Weapon):
 
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.strengh = 1
+        self.damage = 8
         self.weapon_type = "bow"
 
     def __repr__(self):
@@ -157,21 +157,3 @@ class Water (Item):
 
     def __repr__(self):
         return "w"
-        
-
-
-
-
-
-
-
-    
-
- 
-
-
-
-
-
-
-
