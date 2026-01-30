@@ -64,7 +64,7 @@ class Player:
         print(f"{self.name} eats, current hunger : {self.hunger}")
 
     def pick_item(self, item):
-        item.got_picked()
+        #item.got_picked()
         if item.type == "water":
             self.pick_water(item)
         elif item.type == "food":
